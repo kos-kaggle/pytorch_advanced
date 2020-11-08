@@ -1,4 +1,13 @@
 # 5 GANによる画像生成（DCGAN, Self-Attention GAN）
+参考サイト：
+- 深層生成モデルを巡る旅(3): GAN  
+https://qiita.com/shionhonda/items/330c9fdf78e62db3402b
+- GANのなめらかさと安定性  
+https://tech.preferred.jp/ja/blog/smoothness-and-stability-in-gans/
+- 固有値・固有ベクトル  
+https://www.geisya.or.jp/~mwm48961/linear_algebra/eigenvalue2.htm  
+- リプシッツ連続性  
+https://mathwords.net/lipschitz
 
 ## 5-1 GANによる画像生成のメカニズムとDCGANの実装
 - ２種類のネットワークを用意
@@ -44,14 +53,13 @@
         - optimizerをGとDそれぞれに設定（実装例ではどちらもAdam）
         - 誤差関数を定義（バイナリクロスエントロピー）
         - データローダーからミニバッチ分の教師データ（手書き数字画像・真の画像）を取り出し、以下を繰り返す
-            - Discriminatorの学習：
+            1. Discriminatorの学習：
                 1. Dに真の画像を入力して真贋判定
                 2. Gに乱数を入力して偽の画像を生成し、それをDに入力して真贋判定
                 3. 1,2の判定をもとに、Dの損失を計算してDの重みを更新
-            - Generatorの学習：
-                4. Gに乱数を入力して偽の画像を生成し、それをDに入力して真贋判定
-                5. 4の判定をもとに、Gの損失を計算してGの重みを更新
-
+            2. Generatorの学習：
+                1. Gに乱数を入力して偽の画像を生成し、それをDに入力して真贋判定
+                2. 1の判定をもとに、Gの損失を計算してGの重みを更新
 
 ## 5-3 Self-Attention GAN （SANGAN） の概要
 - DCGANの発展版で、元々Transformerなどで使われていたSelf-Attentionを用いた手法。Ian Goodfellowらが2018年に提唱。
